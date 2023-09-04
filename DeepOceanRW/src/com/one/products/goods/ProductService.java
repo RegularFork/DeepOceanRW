@@ -13,6 +13,7 @@ public class ProductService {
 	@SuppressWarnings("rawtypes")
 	public static List<Product>productList = new ArrayList<>();
 	public static final String FILE_PATH = "../cars2.txt";
+	public static final String FILE_READ_PATH = "../products.txt";
 	
 	@SuppressWarnings("unchecked")
 	public static void getDefaultProductList() {
@@ -77,6 +78,7 @@ public class ProductService {
 	
 	// Get Product List from String
 	public static List<Product> readProductsString(String inputString){
+		inputString = inputString.replace(',', '.');
 		String[] products;
 		String[] productsDetailed;
 		List<Product> prodList = new ArrayList<>();
@@ -86,9 +88,17 @@ public class ProductService {
 			for (String str : products) {
 				productsDetailed = pattern.split(str);
 				String whichType = productsDetailed[3];
+				System.out.println(whichType);
 					switch (whichType) {
-					case "PIECES":
-//						prodList.add(new Bread(productsDetailed[0], productsDetailed[1], productsDetailed[2], productsDetailed[3]));
+					case "Pieces":
+						prodList.add(new Bread(productsDetailed[0], Double.parseDouble(productsDetailed[1]), Double.parseDouble(productsDetailed[2]), Type.PIECES));
+						break;
+					case "kg":
+						prodList.add(new Rice(productsDetailed[0], Double.parseDouble(productsDetailed[1]), Double.parseDouble(productsDetailed[2]), Type.MASS));
+						break;
+					case "L":
+						prodList.add(new Milk(productsDetailed[0], Double.parseDouble(productsDetailed[1]), Double.parseDouble(productsDetailed[2]), Type.LITRES));
+						break;
 					}
 			}
 		return prodList;
@@ -101,11 +111,12 @@ public class ProductService {
 			int c;
 			while((c=reader.read())!=-1) {
 				result += (char)c;
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+//		System.out.println(result);
 		return result;
 	}
 }
