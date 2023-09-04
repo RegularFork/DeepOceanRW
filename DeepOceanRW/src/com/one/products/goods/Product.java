@@ -37,6 +37,8 @@ public class Product<T> {
 	public String toString() {
 		return String.format("Product name: %s and it's measured by %s\n", name, ((Type) type).getName());
 	}
-	
+	public String getStringProductInfo() {
+		return String.format("%s;%.2f;%.2f;%s", name, price, quantity,((Type) type).getName());
+	}
 	
 }

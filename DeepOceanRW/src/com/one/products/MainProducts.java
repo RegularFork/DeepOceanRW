@@ -10,10 +10,13 @@ public class MainProducts {
 		for (Product<?> p : ProductService.productList) {
 			System.out.println(p);
 		}
-		ProductService.addProduct();
+//		ProductService.addProduct();
 		for (Product<?> p : ProductService.productList) {
+			System.out.println(p.getStringProductInfo());
 			System.out.println(p);
 		}
+		
+		ProductService.writeAllProductsToFile();
 		
 	}
 

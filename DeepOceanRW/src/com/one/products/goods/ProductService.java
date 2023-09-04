@@ -1,5 +1,7 @@
 package com.one.products.goods;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +9,7 @@ import java.util.Scanner;
 public class ProductService {
 	@SuppressWarnings("rawtypes")
 	public static List<Product>productList = new ArrayList<>();
+	public static final String FILE_PATH = "../cars2.txt";
 	
 	@SuppressWarnings("unchecked")
 	public static void getDefaultProductList() {
@@ -40,5 +43,31 @@ public class ProductService {
 			System.out.println("=====  Wrong input!  =====");
 		}
 		
+	}
+	public static void writeProductToFile(Product<?>product, String path) {
+		try(FileWriter fileWriter = new FileWriter(path, true)){
+			String str = product.getStringProductInfo();
+			fileWriter.write(str);
+			fileWriter.append('\n');
+			System.out.println("File created!");
+		} catch (IOException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	public static void writeAllProductsToFile() {
+		try (FileWriter fileWriter = new FileWriter(FILE_PATH)){
+			fileWriter.write("");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Product<?> prod : productList) {
+			writeProductToFile(prod, FILE_PATH);
+		}
+	}
+	public static List<Product> readProductsFromFile(String path){
+		List<Product> prodList = new ArrayList<>();
+		
+		return prodList;
 	}
 }
