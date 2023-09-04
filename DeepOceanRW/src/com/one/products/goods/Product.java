@@ -12,6 +12,19 @@ public class Product<T> {
 		this.name = name;
 		this.type = type;
 	}
+	
+	
+	
+	public Product(String name, double price, double quantity, T type) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.price = price;
+		this.quantity = quantity;
+	}
+
+
+
 	public String getName() {
 		return name;
 	}

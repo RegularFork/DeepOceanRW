@@ -1,0 +1,3 @@
+Regular Bread;0,00;0,00;Pieces
+Regular Milk;0,00;0,00;L
+Regular Rice;0,00;0,00;kg

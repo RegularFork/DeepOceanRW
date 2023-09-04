@@ -1,10 +1,13 @@
 package com.one.products.goods;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class ProductService {
 	@SuppressWarnings("rawtypes")
@@ -20,6 +23,8 @@ public class ProductService {
 		productList.add(p2);
 		productList.add(p3);
 	}
+	
+	// Add Product from user input
 	public static void addProduct() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Choose product type:\n 1. Bread\n 2. Milk\n 3. Rice\nInput number: ");
@@ -44,6 +49,8 @@ public class ProductService {
 		}
 		
 	}
+	
+	// Add product at file end
 	public static void writeProductToFile(Product<?>product, String path) {
 		try(FileWriter fileWriter = new FileWriter(path, true)){
 			String str = product.getStringProductInfo();
@@ -54,6 +61,8 @@ public class ProductService {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	// Write Product List To File
 	public static void writeAllProductsToFile() {
 		try (FileWriter fileWriter = new FileWriter(FILE_PATH)){
 			fileWriter.write("");
@@ -65,9 +74,38 @@ public class ProductService {
 			writeProductToFile(prod, FILE_PATH);
 		}
 	}
-	public static List<Product> readProductsFromFile(String path){
+	
+	// Get Product List from String
+	public static List<Product> readProductsString(String inputString){
+		String[] products;
+		String[] productsDetailed;
 		List<Product> prodList = new ArrayList<>();
-		
+			Pattern pattern = Pattern.compile("\\n");
+			products = pattern.split(inputString);
+			pattern = Pattern.compile(";");
+			for (String str : products) {
+				productsDetailed = pattern.split(str);
+				String whichType = productsDetailed[3];
+					switch (whichType) {
+					case "PIECES":
+//						prodList.add(new Bread(productsDetailed[0], productsDetailed[1], productsDetailed[2], productsDetailed[3]));
+					}
+			}
 		return prodList;
+	}
+	
+	// Get String List from File
+	public static String getStringFromFile(String path) {
+		String result = "";
+		try (FileReader reader = new FileReader(path)){
+			int c;
+			while((c=reader.read())!=-1) {
+				result += (char)c;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }
